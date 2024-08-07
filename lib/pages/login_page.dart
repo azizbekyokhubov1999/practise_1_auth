@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practise_1_auth/components/my_button.dart';
 import 'package:practise_1_auth/components/square_tile.dart';
@@ -7,7 +8,11 @@ import 'package:practise_1_auth/components/square_tile.dart';
 import '../components/my_textfield.dart';
 
 class LoginPage extends StatefulWidget {
-   const LoginPage({super.key});
+  final Function()? onTap;
+   const LoginPage({
+     super.key,
+     required this.onTap
+   });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -38,38 +43,29 @@ class _LoginPageState extends State<LoginPage> {
      }on FirebaseAuthException catch (e){
        //back to home
        Navigator.pop(context);
-       if(e.code == 'user-not-found'){
          //showing error to user
-         wrongEmailMessage();
-       }
-       else if (e.code == 'wrong-password'){
-         wrongPasswordMessage();
-       }
+         errorMessage(e.code);
+
      }
    }
 
-   //wrong email message
-  void wrongEmailMessage(){
+   //error message
+  void errorMessage(String message){
      showDialog(
          context: context,
          builder: (context){
           return   AlertDialog(
-             title: Text('Incorrect Email'),
+             title: Text(message,
+             style: const TextStyle(
+               color: Colors.grey
+             ),
+             ),
            );
          }
      );
   }
 
-  void wrongPasswordMessage(){
-    showDialog(
-        context: context,
-        builder: (context){
-         return  AlertDialog(
-            title: Text('Incorrect Password'),
-          );
-        }
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
                 //sign in button
                 MyButton(
+                  text: 'Sign in',
                   onTap: signUserIn,
                 ),
                 const SizedBox(height: 40),
@@ -178,10 +175,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(width: 5),
-                    const Text("Register now",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text("Register now",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                     )
                   ],
