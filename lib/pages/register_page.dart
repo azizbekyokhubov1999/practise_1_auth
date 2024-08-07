@@ -5,6 +5,7 @@ import 'package:practise_1_auth/components/my_button.dart';
 import 'package:practise_1_auth/components/square_tile.dart';
 
 import '../components/my_textfield.dart';
+import '../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -151,12 +152,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 25),
 
                 // google + apple sign in
-                const Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SquareTile(imagePath: 'images/img.png'),
+                    SquareTile(
+                      onTap: (){},
+                        imagePath: 'images/img.png'),
                     SizedBox(width: 10),
-                    SquareTile(imagePath: 'images/img_1.png')
+                    SquareTile(
+                        onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: 'images/img_1.png')
                   ],
                 ),
                 const SizedBox(height: 25),

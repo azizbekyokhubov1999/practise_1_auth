@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practise_1_auth/components/my_button.dart';
 import 'package:practise_1_auth/components/square_tile.dart';
+import 'package:practise_1_auth/services/auth_service.dart';
 
 import '../components/my_textfield.dart';
 
@@ -156,12 +157,19 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 40),
 
                 // google + apple sign in
-                const Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SquareTile(imagePath: 'images/img.png'),
+                    SquareTile(
+                      onTap: (){},
+                      imagePath: 'images/img.png',
+                    ),
                     SizedBox(width: 10),
-                    SquareTile(imagePath: 'images/img_1.png')
+                    SquareTile(
+                      onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: 'images/img_1.png',
+
+                    )
                   ],
                 ),
                 const SizedBox(height: 35),
